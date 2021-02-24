@@ -1,0 +1,30 @@
+.alert-error{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert-success-error{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+#nav-bar{
+    position: sticky;
+}
+
+.navbar{
+    background-color: #a94442;
+    /* background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,34,68,1) 35%, rgba(2,0,36,1) 100%);
+    padding: 0; */
+}
+.navbar-nav li{
+    padding: 0 10px;
+}
+
+.nav-link, .navbar-light .navbar-toggler-icon{ 
+    color: #f0ffff!important;
+    font-weight: 600;
+}
