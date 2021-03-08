@@ -101,6 +101,6 @@ app.use('/delete-article', articles);
 app.use('/edit-article', articles);
 app.use('/users', users);
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
 	console.log('Server Running');
 });
