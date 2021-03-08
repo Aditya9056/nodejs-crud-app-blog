@@ -8,6 +8,12 @@ const flash = require('connect-flash');
 const passport = require('passport');
 
 // DB Connection
+// mongoose.connect(
+// 	process.env.DB_CONNECT,
+// 	{ useNewUrlParser: true, useUnifiedTopology: true },
+// 	() => console.log('Connected to DB!')
+// );
+
 mongoose.connect(config.database, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -88,12 +94,11 @@ app.get('/', (req, res) => {
 // Route files
 let articles = require('./routes/articles');
 let users = require('./routes/users');
-const user = require('./models/user');
 
-app.use('/article/', articles);
-app.use('/add-article/', articles);
-app.use('/delete-article/', articles);
-app.use('/edit-article/', articles);
+app.use('/article', articles);
+app.use('/add-article', articles);
+app.use('/delete-article', articles);
+app.use('/edit-article', articles);
 app.use('/users', users);
 
 app.listen(5000, () => {

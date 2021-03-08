@@ -80,7 +80,7 @@ router.post(
 		} else {
 			let article = new Article();
 			article.title = req.body.title;
-			article.author = req.user._id;
+			article.author = req.user.name;
 			article.body = req.body.body;
 
 			article.save((err) => {

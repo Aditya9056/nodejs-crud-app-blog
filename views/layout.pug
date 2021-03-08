@@ -21,7 +21,10 @@ html(lang="en")
                     li
                         a(href='/users/register') Register
                     li
-                        a(href='/users/login') Login
+                        if user
+                            a.nav-link(href='/users/logout') Logout
+                        else
+                            a.nav-link(href='/users/login') Login    
         if user
             a.nav-link(href='/add-article/') Add Article
         a.nav-link(href='/') Index
@@ -34,7 +37,7 @@ html(lang="en")
         .container
             != messages('messages', locals)
             if errors
-                each error in errors
+                each error in errors.errors
                     div(class="alert alert-danger") #{error.msg}
 
             block content
@@ -44,5 +47,6 @@ html(lang="en")
             script.
                 const currentYear= new Date().getFullYear();   
                 document.write("<p>Copyright &copy; ", currentYear +" </p>")
+                
         script(src='/bower_components/jquery/dist/jquery.min.js')
         script(src='/bower_components/bootstrap/dist/js/bootstrap.js')

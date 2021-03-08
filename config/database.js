@@ -1,4 +1,5 @@
 module.exports = {
-	database: 'mongodb://localhost:27017/nodekb',
-	secret: 'your_secret',
+	database:
+		'mongodb+srv://nodejs_crud_blog:pa7BiQwm6BgoSUMH@cluster0.bxnhg.mongodb.net/nodekb?retryWrites=true&w=majority',
+	secret: 'akjsbdaskjn234bjkasnk',
 };

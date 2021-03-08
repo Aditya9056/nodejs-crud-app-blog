@@ -8,7 +8,7 @@ const passport = require('passport');
 let User = require('../models/user');
 
 // Register Form
-router.get('/register', (req, res) => {
+router.get('/register', (_req, res) => {
 	res.render('register', {
 		title: 'Register',
 	});
@@ -17,19 +17,46 @@ router.get('/register', (req, res) => {
 // Register Process
 router.post(
 	'/register',
-	check('name', 'name is required').notEmpty(),
-	check('email', 'e-mail is required').notEmpty(),
-	check('email', 'e-mail is not valid').notEmpty(),
-	check('username', 'username is required').notEmpty(),
-	check('password', 'password is required').notEmpty(),
+	check('name', 'name is required').notEmpty().isString().trim(),
+	check('email', 'e-mail is not valid')
+		.notEmpty()
+		.isEmail()
+		.exists()
+		.trim()
+		.custom((_value, { req }) => {
+			return new Promise((resolve, reject) => {
+				User.findOne({ email: req.body.email }, function (err, user) {
+					if (err) {
+						reject(new Error('Server Error'));
+					}
+					if (Boolean(user)) {
+						reject(new Error('E-mail already in use'));
+					}
+					resolve(true);
+				});
+			});
+		}),
+	check('username', 'username is required')
+		.notEmpty()
+		.isString()
+		.exists()
+		.trim()
+		.custom((_value, { req }) => {
+			return new Promise((resolve, reject) => {
+				User.findOne({ username: req.body.username }, function (err, user) {
+					if (err) {
+						reject(new Error('Server Error'));
+					}
+					if (Boolean(user)) {
+						reject(new Error('Username already in use'));
+					}
+					resolve(true);
+				});
+			});
+		}),
+	check('password', 'password is required').notEmpty().isString(),
 	(req, res) => {
-		const name = req.body.name;
-		const email = req.body.email;
-		const username = req.body.username;
-		const password = req.body.password;
-		const cpassword = req.body.cpassword;
-
-		check('cpassword', 'passwords do not match').equals(cpassword);
+		check('password', 'passwords do not match').equals(req.body.cpassword);
 
 		let errors = validationResult(req);
 
@@ -38,6 +65,11 @@ router.post(
 				errors: errors,
 			});
 		} else {
+			const name = req.body.name;
+			const email = req.body.email;
+			const username = req.body.username;
+			const password = req.body.password;
+
 			let newUser = new User({
 				name: name,
 				email: email,
@@ -71,7 +103,7 @@ router.post(
 );
 
 // Login Form
-router.get('/login', (req, res) => {
+router.get('/login', (_req, res) => {
 	res.render('login', {
 		title: 'Login',
 	});
@@ -88,7 +120,7 @@ router.post('/login', (req, res, next) => {
 });
 
 // Logout
-router.get('/logout', (req, res, next) => {
+router.get('/logout', (req, res, _next) => {
 	req.logout();
 	req.flash('success', 'successfully logout');
 	res.redirect('/');
