@@ -6,6 +6,7 @@ const session = require('express-session');
 const config = require('./config/database');
 const flash = require('connect-flash');
 const passport = require('passport');
+const PORT = process.env.PORT || 5000;
 
 // DB Connection
 // mongoose.connect(
@@ -101,6 +102,6 @@ app.use('/delete-article', articles);
 app.use('/edit-article', articles);
 app.use('/users', users);
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
 	console.log('Server Running');
 });

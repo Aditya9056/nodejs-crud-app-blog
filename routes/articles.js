@@ -19,9 +19,7 @@ router.get('/:id', (req, res) => {
 					console.log(err);
 				} else {
 					res.render('article', {
-						title: article.title,
 						article: article,
-						author: user.name,
 					});
 				}
 			});
