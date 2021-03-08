@@ -14,7 +14,7 @@ router.get('/:id', (req, res) => {
 		if (err) {
 			console.log(err);
 		} else {
-			User.findById(article.author, (err, user) => {
+			User.findById(article._id, (err, user) => {
 				if (err) {
 					console.log(err);
 				} else {
